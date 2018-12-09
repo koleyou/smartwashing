@@ -54,12 +54,12 @@ AlertMe alert;
 
 uint8_t config_pin = 12;
 
-String to_email = "koleyou@gmail.com";  // The email address to send the message to
-String to_sms = "7857665659@vtext.com"; // Look up your carrier's Email-to-SMS gateway here: https://martinfitzpatrick.name/list-of-email-to-sms-gateways/
+String to_email = "sellis5566.se@gmail.com";  // The email address to send the message to
+String to_sms = "6235651450@tmomail.net"; // Look up your carrier's Email-to-SMS gateway here: https://martinfitzpatrick.name/list-of-email-to-sms-gateways/
 
 String subject_line = "AlertMe Demo";
 String message;
-
+String arduinoMessage;
 void setup() {
   Serial.begin(115200);
   pinMode(config_pin,INPUT_PULLUP);
@@ -89,12 +89,15 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  while (Serial.available() > 0){
-    char text = Serial.read();
-    if (text == 's')
-      Serial.println(alert.send(subject_line, String("Washer complete"), to_sms));
-    else if (text == 'e')
-      Serial.println(alert.send(subject_line, String("There was an error. Sorry :(")
-      , to_sms));
+  char text;
+  Serial.flush();
+  if (Serial.available() > 0){
+    text = Serial.read();
+    Serial.println(text);
+    
   }
+  if (text == 'd')
+      Serial.println(alert.send(String("Washer complete"), String("Washer complete"), to_sms));
+  else if (text == 'c')
+      Serial.println(alert.send(String("Cycle Started"), String("Cycle Started"), to_sms));
 }
